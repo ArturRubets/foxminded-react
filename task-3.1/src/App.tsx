@@ -1,12 +1,11 @@
 import React from 'react';
 import './App.css';
+import CounterClassComponent from './components/CounterClassComponent';
 
-function App() {
-  return (
-    <div className="App">
-      React
-    </div>
-  );
-}
+const App: React.FC = () => (
+  <div className="App">
+    <CounterClassComponent initialValue={0} />
+  </div>
+);
 
 export default App;
