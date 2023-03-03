@@ -1,0 +1,20 @@
+.counter {
+  background-color: #000000;
+  display: inline-block;
+  color: #ffffff;
+  margin: 15px;
+  padding: 5px;
+}
+.counter__text {
+  font-size: 20px;
+}
+.counter__text--signature {
+  font-weight: 700;
+  padding-right: 5px;
+}
+.counter__btn {
+  font-size: 20px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 10px;
+}
