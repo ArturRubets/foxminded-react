@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-const StyledNavbar = () => {
+const Navigation = () => {
   return (
     <nav className="navbar">
       <NavLink
@@ -22,4 +22,4 @@ const StyledNavbar = () => {
   );
 };
 
-export default StyledNavbar;
+export default Navigation;

@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
-import StyledNavbar from '../components/StyledNavbar';
+import Navigation from '../components/Navigation';
 
 const SharedLayout = () => {
   return (
     <>
-      <StyledNavbar />
+      <Navigation />
       <Outlet />
     </>
   );
