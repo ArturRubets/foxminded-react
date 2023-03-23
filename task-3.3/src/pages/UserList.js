@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersUpdated } from '../features/users/usersSlice';
+import List from '../components/List';
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -8,40 +9,33 @@ const UserList = () => {
   const usersData = useSelector((state) => state.users.data);
   const [users, setUsers] = useState(usersData);
 
+  useEffect(() => {
+    setUsers(usersData);
+  }, [usersData]);
+
   const onUserChange = (e, index) => {
     const newUsers = [...users];
     newUsers[index] = e.target.value;
     setUsers(newUsers);
   };
 
-  useEffect(() => {
-    setUsers(usersData);
-  }, [usersData]);
+  const onAdd = () => {
+    setUsers([...users, '']);
+  };
+
+  const onSave = () => {
+    const notEmpty = users.filter((user) => user !== '');
+    dispatch(usersUpdated(notEmpty));
+  };
 
   return (
-    <section className="section">
-      <h2>UsersList</h2>
-      {users.map((user, index) => (
-        <div key={index}>
-          <input value={user} onChange={(e) => onUserChange(e, index)} />
-        </div>
-      ))}
-      <div className="btn-container">
-        <button
-          onClick={() => {
-            setUsers([...users, '']);
-          }}>
-          Add new
-        </button>
-        <button
-          onClick={() => {
-            const notEmpty = users.filter((user) => user !== '');
-            dispatch(usersUpdated(notEmpty));
-          }}>
-          Save
-        </button>
-      </div>
-    </section>
+    <List
+      title={'UsersList'}
+      data={users}
+      onAdd={onAdd}
+      onChange={onUserChange}
+      onSave={onSave}
+    />
   );
 };
 
