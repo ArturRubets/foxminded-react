@@ -11,12 +11,9 @@ const postsSlice = createSlice({
     postsUpdated(state, { payload }) {
       state.data = payload;
     },
-    postAdd(state, { payload }) {
-      state.data.push(payload);
-    },
   },
 });
 
-export const { postsUpdated, postAdd } = postsSlice.actions;
+export const { postsUpdated } = postsSlice.actions;
 
 export default postsSlice.reducer;

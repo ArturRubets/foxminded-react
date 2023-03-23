@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { postsUpdated, postAdd } from '../features/posts/postsSlice';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { postsUpdated } from '../features/posts/postsSlice';
 
 const PostsList = () => {
   const dispatch = useDispatch();
@@ -14,20 +14,25 @@ const PostsList = () => {
     setPosts(newPosts);
   };
 
+  useEffect(() => {
+    setPosts(postsData);
+  }, [postsData]);
+
   return (
     <section className="section">
       <h2>PostsList</h2>
       {posts.map((post, index) => (
-        <div>
-          <input
-            key={index}
-            value={post}
-            onChange={(e) => onPostChange(e, index)}
-          />
+        <div key={index}>
+          <input value={post} onChange={(e) => onPostChange(e, index)} />
         </div>
       ))}
-      <div className='btn-container'>
-        <button onClick={() => dispatch(postAdd(''))}>Add new</button>
+      <div className="btn-container">
+        <button
+          onClick={() => {
+            setPosts([...posts, '']);
+          }}>
+          Add new
+        </button>
         <button
           onClick={() => {
             const notEmpty = posts.filter((post) => post !== '');
