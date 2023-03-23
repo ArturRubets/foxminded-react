@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  posts: ['nature', 'weather', 'sun'],
+  data: ['nature', 'weather', 'sun'],
 };
 
 const postsSlice = createSlice({
@@ -9,10 +9,10 @@ const postsSlice = createSlice({
   initialState,
   reducers: {
     postsUpdated(state, { payload }) {
-      state.posts = payload;
+      state.data = payload;
     },
     postAdd(state, { payload }) {
-      state.posts.push(payload);
+      state.data.push(payload);
     },
   },
 });

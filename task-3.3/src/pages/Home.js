@@ -1,18 +1,16 @@
 import { useSelector } from 'react-redux';
 
 const Home = () => {
-  const {
-    posts: { posts },
-    user: { users },
-    todo: { todos },
-  } = useSelector((state) => state);
+  const postsData = useSelector((state) => state.posts.data);
+  const usersData = useSelector((state) => state.users.data);
+  const todosData = useSelector((state) => state.todos.data);
 
   return (
     <section>
       <article>
         <p>PostList</p>
         <ul>
-          {posts.map((post, index) => (
+          {postsData.map((post, index) => (
             <li key={index}>{post}</li>
           ))}
         </ul>
@@ -20,7 +18,7 @@ const Home = () => {
       <article>
         <p>UserList</p>
         <ul>
-          {users.map((user, index) => (
+          {usersData.map((user, index) => (
             <li key={index}>{user}</li>
           ))}
         </ul>
@@ -28,7 +26,7 @@ const Home = () => {
       <article>
         <p>TodoList</p>
         <ul>
-          {todos.map((todo, index) => (
+          {todosData.map((todo, index) => (
             <li key={index}>{todo}</li>
           ))}
         </ul>

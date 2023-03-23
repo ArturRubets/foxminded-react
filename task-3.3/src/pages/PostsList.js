@@ -5,7 +5,7 @@ import { postsUpdated, postAdd } from '../features/posts/postsSlice';
 const PostsList = () => {
   const dispatch = useDispatch();
 
-  const postsData = useSelector((state) => state.posts.posts);
+  const postsData = useSelector((state) => state.posts.data);
   const [posts, setPosts] = useState(postsData);
 
   const onPostChange = (e, index) => {
