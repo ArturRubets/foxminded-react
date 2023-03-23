@@ -16,18 +16,18 @@ const Home = () => {
         </ul>
       </article>
       <article>
-        <p>UserList</p>
-        <ul>
-          {usersData.map((user, index) => (
-            <li key={index}>{user}</li>
-          ))}
-        </ul>
-      </article>
-      <article>
         <p>TodoList</p>
         <ul>
           {todosData.map((todo, index) => (
             <li key={index}>{todo}</li>
+          ))}
+        </ul>
+      </article>
+      <article>
+        <p>UserList</p>
+        <ul>
+          {usersData.map((user, index) => (
+            <li key={index}>{user}</li>
           ))}
         </ul>
       </article>
