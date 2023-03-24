@@ -121,10 +121,6 @@ small,
 a {
   text-decoration: none;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
 
 .img {
   width: 100%;
@@ -280,4 +276,24 @@ ul {
 
 .active {
   color: var(--primary-500);
+}
+
+article {
+  margin: 2rem 0;
+}
+
+article p,
+article ul {
+  margin: 0;
+}
+
+article p {
+  padding-left: 1.5rem;
+  font-weight: bold;
+}
+
+.btn-container {
+  padding: 1rem 0;
+  display: flex;
+  gap: 1rem;
 }

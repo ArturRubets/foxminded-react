@@ -6,7 +6,12 @@ const Navigation = () => {
       <NavLink
         to="/"
         className={({ isActive }) => (isActive ? 'link active' : 'link')}>
-        PostList
+        Home
+      </NavLink>
+      <NavLink
+        to="/posts-list"
+        className={({ isActive }) => (isActive ? 'link active' : 'link')}>
+        PostsList
       </NavLink>
       <NavLink
         to="/todo-list"
