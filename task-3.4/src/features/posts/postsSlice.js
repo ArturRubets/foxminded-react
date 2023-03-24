@@ -56,20 +56,15 @@ const postsSlice = createSlice({
   reducers: {
     postsUpdated(state, { payload }) {
       state.data = payload;
+      savePostsToLocalStorage(state.data);
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getPosts.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(getPosts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.data = payload;
-      })
-      .addCase(getPosts.rejected, (state, { payload }) => {
-        console.error(payload);
-        state.isLoading = false;
+        savePostsToLocalStorage(state.data);
       })
       .addCase(postPosts.fulfilled, (state, { payload }) => {
         // id always has the same value, this is a problem for displaying the list of posts
@@ -82,9 +77,11 @@ const postsSlice = createSlice({
           title,
           body,
         });
+        savePostsToLocalStorage(state.data);
       })
       .addCase(deletePosts.fulfilled, (state, { payload }) => {
         state.data = state.data.filter((item) => item.id !== payload);
+        savePostsToLocalStorage(state.data);
       });
   },
 });
@@ -92,3 +89,45 @@ const postsSlice = createSlice({
 export const { postsUpdated, postsAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;
+
+const localStorageKey = 'posts';
+
+// Function to retrieve data from local storage
+const loadPostsFromLocalStorage = () => {
+  try {
+    const serializedData = localStorage.getItem(localStorageKey);
+    if (serializedData === null) {
+      return undefined;
+    }
+    return JSON.parse(serializedData);
+  } catch (error) {
+    console.log('Error while loading posts from localStorage: ', error);
+    return undefined;
+  }
+};
+
+// Function for saving data in local storage
+const savePostsToLocalStorage = (state) => {
+  try {
+    const serializedData = JSON.stringify(state);
+    localStorage.setItem(localStorageKey, serializedData);
+  } catch (error) {
+    console.log('Error while saving posts to localStorage: ', error);
+  }
+};
+
+export const fetchPosts = () => async (dispatch, getState) => {
+  const state = getState();
+  const postsData = state.posts.data;
+
+  if (postsData.length === 0) {
+    // If there is no data in the Redux store, check if it is stored in LocalStorage
+    const postsFromLocalStorage = loadPostsFromLocalStorage();
+    if (postsFromLocalStorage) {
+      dispatch(postsUpdated(postsFromLocalStorage));
+    } else {
+      // If there is no data in LocalStorage, fetch the data from the API
+      dispatch(getPosts());
+    }
+  }
+};
