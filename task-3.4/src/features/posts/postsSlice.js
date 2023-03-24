@@ -21,6 +21,20 @@ export const getPosts = createAsyncThunk(
   }
 );
 
+export const postPosts = createAsyncThunk(
+  'posts/postPosts',
+  async (post, thunkAPI) => {
+    try {
+      const resp = await axios.post(url, post);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        'something went wrong while posting the posts'
+      );
+    }
+  }
+);
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -41,10 +55,22 @@ const postsSlice = createSlice({
       .addCase(getPosts.rejected, (state, { payload }) => {
         console.error(payload);
         state.isLoading = false;
+      })
+      .addCase(postPosts.fulfilled, (state, { payload }) => {
+        // id always has the same value, this is a problem for displaying the list of posts
+        const { title, body } = payload;
+        const maxId = state.data.reduce((max, item) => {
+          return item.id > max ? item.id : max;
+        }, 0);
+        state.data.push({
+          id: maxId + 1,
+          title,
+          body,
+        });
       });
   },
 });
 
-export const { postsUpdated } = postsSlice.actions;
+export const { postsUpdated, postsAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;

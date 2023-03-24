@@ -130,6 +130,7 @@ a {
 /* buttons */
 
 .btn {
+  font-size: 1rem;
   cursor: pointer;
   color: var(--white);
   background: var(--primary-500);
@@ -297,17 +298,45 @@ article p {
   gap: 1rem;
 }
 
-textarea {
+label {
+  font-weight: 600;
+  max-width: 100%;
+  display: block;
+  margin: 1rem 0 0.5rem;
+}
+
+textarea,
+input {
+  display: block;
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  padding: 0.75rem;
+  outline: none;
+  background: transparent;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
   width: 100%;
-  height: auto;
-  background-color: #f5f5f5;
-  color: #333;
+  max-width: 100%;
+  line-height: 1;
   font-family: inherit;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
-  overflow-x: auto;
-  overflow-y: hidden;
+}
+
+textarea {
   resize: vertical;
+  min-height: 100px;
+}
+
+.post-excerpt {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgb(177, 174, 174);
+  border-radius: 7px;
+  margin: 0;
+}
+
+.posts-list .post-excerpt + .post-excerpt {
+  margin-top: 0.5rem;
+}
+
+hr {
+  margin: 2rem 0;
 }
