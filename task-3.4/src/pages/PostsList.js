@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postPosts, postsUpdated } from '../features/posts/postsSlice';
+import {
+  deletePosts,
+  postPosts,
+  postsUpdated,
+} from '../features/posts/postsSlice';
 
 const PostsList = () => {
   const [isAdd, setIsAdd] = useState(false);
@@ -41,6 +45,11 @@ const PostsList = () => {
     setIsAdd(false);
   };
 
+  const onDelete = (id) => {
+    const post = posts.find((post) => post.id === id);
+    dispatch(deletePosts(post));
+  };
+
   const onSave = () => {
     // We cancel the addition of the post
     setIsAdd(false);
@@ -74,6 +83,9 @@ const PostsList = () => {
                 onChange={(e) => onChangeBody(e, item.id)}
               />
             </label>
+            <button className="btn" onClick={() => onDelete(item.id)}>
+              Delete
+            </button>
           </article>
         </React.Fragment>
       ))}

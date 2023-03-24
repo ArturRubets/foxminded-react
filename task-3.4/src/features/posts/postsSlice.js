@@ -35,6 +35,21 @@ export const postPosts = createAsyncThunk(
   }
 );
 
+export const deletePosts = createAsyncThunk(
+  'posts/deletePosts',
+  async (post, thunkAPI) => {
+    try {
+      await axios.delete(url + `/${post.id}`);
+      // the call does not return the id, so I return the id in this way
+      return post.id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        'something went wrong while deleting the posts'
+      );
+    }
+  }
+);
+
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -67,6 +82,9 @@ const postsSlice = createSlice({
           title,
           body,
         });
+      })
+      .addCase(deletePosts.fulfilled, (state, { payload }) => {
+        state.data = state.data.filter((item) => item.id !== payload);
       });
   },
 });
