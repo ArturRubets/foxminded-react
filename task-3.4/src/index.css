@@ -340,3 +340,7 @@ textarea {
 hr {
   margin: 2rem 0;
 }
+
+.todo-excerpt input[type='checkbox'] {
+  width: auto;
+}

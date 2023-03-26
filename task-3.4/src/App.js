@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { fetchPosts } from './features/posts/postsSlice';
+import { fetchTodos } from './features/todos/todosSlice';
 import Error from './pages/Error';
 import Home from './pages/Home';
 import PostsList from './pages/PostsList';
@@ -14,6 +15,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchPosts());
+    dispatch(fetchTodos());
   }, [dispatch]);
 
   return (
