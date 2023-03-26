@@ -344,3 +344,13 @@ hr {
 .todo-excerpt input[type='checkbox'] {
   width: auto;
 }
+
+.data {
+  border: 1px solid rgb(177, 174, 174);
+  margin: 2rem 0;
+  padding: 0.5rem 1rem;
+}
+
+.name {
+  font-weight: bold;
+}
