@@ -14,12 +14,20 @@ const TodosList = () => {
   const [newTodo, setNewTodo] = useState(defaultNewTodo);
   const todosData = useSelector((state) => state.todos.data);
   const [todos, setTodos] = useState(todosData);
+  const [isDragEnd, setIsDragEnd] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     setTodos(todosData);
   }, [todosData]);
+
+  useEffect(() => {
+    if (isDragEnd) {
+      dispatch(todosUpdated(todos));
+      setIsDragEnd(false);
+    }
+  }, [dispatch, todos, isDragEnd]);
 
   const onChange = (value, id, property) => {
     const index = todos.findIndex((todo) => todo.id === id);
@@ -65,6 +73,7 @@ const TodosList = () => {
 
   const onDragEnd = (result) => {
     if (!result?.destination) return;
+    setIsDragEnd(true);
     const items = [...todos];
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);

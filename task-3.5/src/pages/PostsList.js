@@ -14,12 +14,20 @@ const PostsList = () => {
   const [newPost, setNewPost] = useState(defaultNewPost);
   const postsData = useSelector((state) => state.posts.data);
   const [posts, setPosts] = useState(postsData);
+  const [isDragEnd, setIsDragEnd] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     setPosts(postsData);
   }, [postsData]);
+
+  useEffect(() => {
+    if (isDragEnd) {
+      dispatch(postsUpdated(posts));
+      setIsDragEnd(false);
+    }
+  }, [dispatch, posts, isDragEnd]);
 
   const onChange = (e, id, property) => {
     const index = posts.findIndex((post) => post.id === id);
@@ -65,6 +73,7 @@ const PostsList = () => {
 
   const onDragEnd = (result) => {
     if (!result?.destination) return;
+    setIsDragEnd(true);
     const items = [...posts];
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
