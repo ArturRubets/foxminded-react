@@ -66,7 +66,7 @@ const UsersList = () => {
       <h2>UsersList</h2>
       {users.map((item) => (
         <React.Fragment key={item.id}>
-          <article className="user-excerpt">
+          <article className="excerpt">
             <label>
               Name:
               <input
@@ -92,7 +92,7 @@ const UsersList = () => {
       {isAdd && (
         <div className="fill-new-user">
           <hr />
-          <article className="user-excerpt">
+          <article className="excerpt">
             <label>
               Name:
               <input

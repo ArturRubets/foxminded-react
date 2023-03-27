@@ -66,7 +66,7 @@ const PostsList = () => {
       <h2>PostsList</h2>
       {posts.map((item) => (
         <React.Fragment key={item.id}>
-          <article className="post-excerpt">
+          <article className="excerpt">
             <label>
               Post Title:
               <input
@@ -91,7 +91,7 @@ const PostsList = () => {
       {isAdd && (
         <div className="fill-new-post">
           <hr />
-          <article className="post-excerpt">
+          <article className="excerpt">
             <label>
               Post Title:
               <input

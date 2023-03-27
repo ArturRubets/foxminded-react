@@ -8,10 +8,10 @@ const Home = () => {
   return (
     <section>
       <article>
-        <p>PostList</p>
+        <h2>PostList</h2>
         <ul>
           {postsData.map((post) => (
-            <div key={post.id} className="data">
+            <div key={post.id} className="home excerpt">
               <div className="name">Title</div>
               <div>{post.title}</div>
               <div className="name">Body</div>
@@ -21,10 +21,10 @@ const Home = () => {
         </ul>
       </article>
       <article>
-        <p>TodosList</p>
+        <h2>TodosList</h2>
         <ul>
           {todosData.map((post) => (
-            <div key={post.id} className="data">
+            <div key={post.id} className="home excerpt">
               <div className="name">Title</div>
               <div>{post.title}</div>
               <div className="name">Completed</div>
@@ -34,10 +34,10 @@ const Home = () => {
         </ul>
       </article>
       <article>
-        <p>UsersList</p>
+        <h2>UsersList</h2>
         <ul>
           {usersData.map((post) => (
-            <div key={post.id} className="data">
+            <div key={post.id} className="home excerpt">
               <div className="name">Name</div>
               <div>{post.name}</div>
               <div className="name">Username</div>
