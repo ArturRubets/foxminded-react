@@ -5,6 +5,8 @@ import {
   postTodos,
   todosUpdated,
 } from '../features/todos/todosSlice';
+import { DragDropContext, Draggable } from 'react-beautiful-dnd';
+import { StrictModeDroppable as Droppable } from '../helpers/StrictModeDroppable';
 
 const TodosList = () => {
   const [isAdd, setIsAdd] = useState(false);
@@ -61,36 +63,64 @@ const TodosList = () => {
     }
   };
 
-  const content = todos.map((item) => (
-    <React.Fragment key={item.id}>
-      <article className="todo-excerpt">
-        <label>
-          Todo Title:
-          <input
-            type="text"
-            value={item.title}
-            onChange={(e) => onChangeTitle(e, item.id)}
-          />
-        </label>
-        <label>
-          Completed:
-          <input
-            type="checkbox"
-            checked={item.completed}
-            onChange={(e) => onChangeCompleted(e, item.id)}
-          />
-        </label>
-        <button className="btn" onClick={() => onDelete(item.id)}>
-          Delete
-        </button>
-      </article>
-    </React.Fragment>
-  ));
+  const onDragEnd = (result) => {
+    if (!result?.destination) return;
+    const items = [...todos];
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setTodos(items);
+  };
+
+  const content = (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="todos">
+        {(provided) => (
+          <section {...provided.droppableProps} ref={provided.innerRef}>
+            {todos.map((item, index) => (
+              <Draggable
+                key={item.id}
+                draggableId={item.id.toString()}
+                index={index}>
+                {(provided) => (
+                  <article
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                    className="excerpt todo-excerpt">
+                    <label>
+                      Todo Title:
+                      <input
+                        type="text"
+                        value={item.title}
+                        onChange={(e) => onChangeTitle(e, item.id)}
+                      />
+                    </label>
+                    <label>
+                      Completed:
+                      <input
+                        type="checkbox"
+                        checked={item.completed}
+                        onChange={(e) => onChangeCompleted(e, item.id)}
+                      />
+                    </label>
+                    <button className="btn" onClick={() => onDelete(item.id)}>
+                      Delete
+                    </button>
+                  </article>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </section>
+        )}
+      </Droppable>
+    </DragDropContext>
+  );
 
   const newItemSection = isAdd && (
     <div className="fill-new-todo">
       <hr />
-      <article className="todo-excerpt">
+      <article className="excerpt todo-excerpt">
         <label>
           Todo Title:
           <input
