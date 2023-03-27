@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteTodos,
   postTodos,
   todosUpdated,
 } from '../features/todos/todosSlice';
-import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import { StrictModeDroppable as Droppable } from '../helpers/StrictModeDroppable';
 
 const TodosList = () => {
