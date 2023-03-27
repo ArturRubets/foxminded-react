@@ -10,11 +10,10 @@ const PostsList = () => {
   const [isAdd, setIsAdd] = useState(false);
   const defaultNewPost = { title: '', body: '' };
   const [newPost, setNewPost] = useState(defaultNewPost);
-
-  const dispatch = useDispatch();
-
   const postsData = useSelector((state) => state.posts.data);
   const [posts, setPosts] = useState(postsData);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setPosts(postsData);
@@ -65,8 +64,8 @@ const PostsList = () => {
   return (
     <section className="section posts-list">
       <h2>PostsList</h2>
-      {posts.map((item, index) => (
-        <React.Fragment key={index}>
+      {posts.map((item) => (
+        <React.Fragment key={item.id}>
           <article className="post-excerpt">
             <label>
               Post Title:

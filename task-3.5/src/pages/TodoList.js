@@ -10,11 +10,10 @@ const TodosList = () => {
   const [isAdd, setIsAdd] = useState(false);
   const defaultNewTodo = { title: '', completed: false };
   const [newTodo, setNewTodo] = useState(defaultNewTodo);
-
-  const dispatch = useDispatch();
-
   const todosData = useSelector((state) => state.todos.data);
   const [todos, setTodos] = useState(todosData);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTodos(todosData);
@@ -65,8 +64,8 @@ const TodosList = () => {
   return (
     <section className="section todos-list">
       <h2>TodosList</h2>
-      {todos.map((item, index) => (
-        <React.Fragment key={index}>
+      {todos.map((item) => (
+        <React.Fragment key={item.id}>
           <article className="todo-excerpt">
             <label>
               Todo Title:

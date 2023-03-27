@@ -10,11 +10,10 @@ const UsersList = () => {
   const [isAdd, setIsAdd] = useState(false);
   const defaultNewUser = { name: '', username: '' };
   const [newUser, setNewUser] = useState(defaultNewUser);
-
-  const dispatch = useDispatch();
-
   const usersData = useSelector((state) => state.users.data);
   const [users, setUsers] = useState(usersData);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setUsers(usersData);
@@ -65,8 +64,8 @@ const UsersList = () => {
   return (
     <section className="section users-list">
       <h2>UsersList</h2>
-      {users.map((item, index) => (
-        <React.Fragment key={index}>
+      {users.map((item) => (
+        <React.Fragment key={item.id}>
           <article className="user-excerpt">
             <label>
               Name:
