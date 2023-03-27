@@ -86,7 +86,7 @@ const TodosList = () => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
-                    className="excerpt todo-excerpt">
+                    className="excerpt">
                     <label>
                       Todo Title:
                       <input
@@ -120,7 +120,7 @@ const TodosList = () => {
   const newItemSection = isAdd && (
     <div className="fill-new-todo">
       <hr />
-      <article className="excerpt todo-excerpt">
+      <article className="excerpt">
         <label>
           Todo Title:
           <input
