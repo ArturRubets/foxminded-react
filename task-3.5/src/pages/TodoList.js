@@ -61,76 +61,84 @@ const TodosList = () => {
     }
   };
 
+  const content = todos.map((item) => (
+    <React.Fragment key={item.id}>
+      <article className="todo-excerpt">
+        <label>
+          Todo Title:
+          <input
+            type="text"
+            value={item.title}
+            onChange={(e) => onChangeTitle(e, item.id)}
+          />
+        </label>
+        <label>
+          Completed:
+          <input
+            type="checkbox"
+            checked={item.completed}
+            onChange={(e) => onChangeCompleted(e, item.id)}
+          />
+        </label>
+        <button className="btn" onClick={() => onDelete(item.id)}>
+          Delete
+        </button>
+      </article>
+    </React.Fragment>
+  ));
+
+  const newItemSection = isAdd && (
+    <div className="fill-new-todo">
+      <hr />
+      <article className="todo-excerpt">
+        <label>
+          Todo Title:
+          <input
+            type="text"
+            value={newTodo.title}
+            onChange={(e) => {
+              setNewTodo({ ...newTodo, title: e.target.value });
+            }}
+          />
+        </label>
+        <label>
+          Completed:
+          <input
+            type="checkbox"
+            checked={newTodo.completed}
+            onChange={(e) => {
+              setNewTodo({ ...newTodo, completed: e.target.value });
+            }}
+          />
+        </label>
+      </article>
+    </div>
+  );
+
+  const buttons = (
+    <div className="btn-container">
+      {isAdd && (
+        <button className="btn btn-hipster" onClick={onCancel}>
+          Cancel
+        </button>
+      )}
+      {!isAdd && (
+        <button className="btn" onClick={onAdd}>
+          Add new
+        </button>
+      )}
+      <button className="btn" onClick={onSave}>
+        Save
+      </button>
+    </div>
+  );
+
   return (
     <section className="section todos-list">
       <h2>TodosList</h2>
-      {todos.map((item) => (
-        <React.Fragment key={item.id}>
-          <article className="todo-excerpt">
-            <label>
-              Todo Title:
-              <input
-                type="text"
-                value={item.title}
-                onChange={(e) => onChangeTitle(e, item.id)}
-              />
-            </label>
-            <label>
-              Completed:
-              <input
-                type="checkbox"
-                checked={item.completed}
-                onChange={(e) => onChangeCompleted(e, item.id)}
-              />
-            </label>
-            <button className="btn" onClick={() => onDelete(item.id)}>
-              Delete
-            </button>
-          </article>
-        </React.Fragment>
-      ))}
-      {isAdd && (
-        <div className="fill-new-todo">
-          <hr />
-          <article className="todo-excerpt">
-            <label>
-              Todo Title:
-              <input
-                type="text"
-                value={newTodo.title}
-                onChange={(e) => {
-                  setNewTodo({ ...newTodo, title: e.target.value });
-                }}
-              />
-            </label>
-            <label>
-              Completed:
-              <input
-                type="checkbox"
-                checked={newTodo.completed}
-                onChange={(e) => {
-                  setNewTodo({ ...newTodo, completed: e.target.value });
-                }}
-              />
-            </label>
-          </article>
-        </div>
-      )}
-      <div className="btn-container">
-        {isAdd && (
-          <button className="btn btn-hipster" onClick={onCancel}>
-            Cancel
-          </button>
-        )}
-        {!isAdd && (
-          <button className="btn" onClick={onAdd}>
-            Add new
-          </button>
-        )}
-        <button className="btn" onClick={onSave}>
-          Save
-        </button>
-      </div>
+      {content}
+      {newItemSection}
+      {buttons}
     </section>
   );
 };
