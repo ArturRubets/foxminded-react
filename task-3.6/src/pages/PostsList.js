@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import MyTextInput from '../components/PostForm';
 import {
   deletePosts,
   postPosts,
@@ -10,8 +11,6 @@ import { StrictModeDroppable as Droppable } from '../helpers/StrictModeDroppable
 
 const PostsList = () => {
   const [isAdd, setIsAdd] = useState(false);
-  const defaultNewPost = { title: '', body: '' };
-  const [newPost, setNewPost] = useState(defaultNewPost);
   const postsData = useSelector((state) => state.posts.data);
   const [posts, setPosts] = useState(postsData);
   const [isDragEnd, setIsDragEnd] = useState(false);
@@ -59,14 +58,15 @@ const PostsList = () => {
     dispatch(deletePosts(post));
   };
 
-  const onSave = () => {
+  const updatePosts = () => {
+    dispatch(postsUpdated(posts));
+  };
+
+  const createPost = (newPost) => {
     // We cancel the addition of the post
     setIsAdd(false);
-    setNewPost({ ...defaultNewPost });
 
-    dispatch(postsUpdated(posts));
-
-    if (newPost.title || newPost.body) {
+    if (newPost) {
       dispatch(postPosts(newPost));
     }
   };
@@ -125,57 +125,27 @@ const PostsList = () => {
     </DragDropContext>
   );
 
-  const newItemSection = isAdd && (
-    <div className="fill-new-post">
-      <hr />
-      <article className="excerpt">
-        <label>
-          Post Title:
-          <input
-            type="text"
-            value={newPost.title}
-            onChange={(e) => {
-              setNewPost({ ...newPost, title: e.target.value });
-            }}
-          />
-        </label>
-        <label>
-          Content:
-          <textarea
-            value={newPost.body}
-            onChange={(e) => {
-              setNewPost({ ...newPost, body: e.target.value });
-            }}
-          />
-        </label>
-      </article>
-    </div>
-  );
-
-  const buttons = (
+  const buttons = !isAdd && (
     <div className="btn-container">
-      {isAdd && (
-        <button className="btn btn-hipster" onClick={onCancel}>
-          Cancel
-        </button>
-      )}
-      {!isAdd && (
-        <button className="btn" onClick={onAdd}>
-          Add new
-        </button>
-      )}
-      <button className="btn" onClick={onSave}>
+      <button className="btn" onClick={onAdd}>
+        Add new
+      </button>
+      <button className="btn" onClick={updatePosts}>
         Save
       </button>
     </div>
+  );
+
+  const postForm = isAdd && (
+    <MyTextInput onCancel={onCancel} onSave={createPost} />
   );
 
   return (
     <section className="section posts-list">
       <h2>PostsList</h2>
       {content}
-      {newItemSection}
       {buttons}
+      {postForm}
     </section>
   );
 };
