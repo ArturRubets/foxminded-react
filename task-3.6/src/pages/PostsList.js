@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import Image from '../components/Image';
 import MyTextInput from '../components/PostForm';
 import {
   deletePosts,
@@ -111,6 +112,13 @@ const PostsList = () => {
                         onChange={(e) => onChangeBody(e, item.id)}
                       />
                     </label>
+                    {item.imageUrl && (
+                      <Image
+                        className="post-img"
+                        src={item.imageUrl}
+                        alt="Post"
+                      />
+                    )}
                     <button className="btn" onClick={() => onDelete(item.id)}>
                       Delete
                     </button>

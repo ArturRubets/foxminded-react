@@ -355,3 +355,9 @@ hr {
   color: #e53e3e;
   margin-top: 0.25rem;
 }
+
+.post-img {
+  display: block;
+  width: 50%;
+  margin: 1rem 0;
+}
