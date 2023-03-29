@@ -363,12 +363,23 @@ hr {
 }
 
 .post-date {
+  margin: 1rem 0;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.post-tags-container {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.post-tag {
   font-size: 14px;
   font-weight: bold;
   color: #333;
   padding: 5px 10px;
   background-color: #eee;
-  margin: 1rem 0;
   border-radius: 5px;
   display: inline-block;
 }

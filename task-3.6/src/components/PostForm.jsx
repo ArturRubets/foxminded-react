@@ -63,6 +63,7 @@ const PostForm = ({ onCancel, onSave }) => {
           body: '',
           imageUrl: '',
           date: today,
+          tags: '',
         }}
         validationSchema={Yup.object({
           title: Yup.string()
@@ -75,8 +76,18 @@ const PostForm = ({ onCancel, onSave }) => {
           date: Yup.date()
             .min(today, 'Date must be equal to or later than today')
             .required('Required'),
+          tags: Yup.string().matches(
+            /^#(\w+\b)(,\s*#(\w+\b))*$/,
+            'Each tag should start with #'
+          ),
         })}
         onSubmit={(values) => {
+          if (values.tags) {
+            const arrayTags = values.tags.split(/[ ,]+/);
+            values.tags = arrayTags;
+          } else {
+            values.tags = [];
+          }
           onSave(values);
         }}>
         <Form className="excerpt">
@@ -94,6 +105,13 @@ const PostForm = ({ onCancel, onSave }) => {
             id="date"
             type="date"
             minDate={today}
+          />
+          <MyTextInput
+            label="Tags"
+            name="tags"
+            id="tags"
+            type="text"
+            placeholder="#spring, #flower, #sun"
           />
           <div className="btn-container">
             <button className="btn btn-hipster" onClick={onCancel}>

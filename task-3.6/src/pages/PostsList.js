@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from '../components/Image';
-import MyTextInput from '../components/PostForm';
+import PostForm from '../components/PostForm';
 import {
   deletePosts,
   postPosts,
@@ -122,6 +122,13 @@ const PostsList = () => {
                           alt="Post"
                         />
                       )}
+                      {item.tags && (
+                        <div className="post-tags-container">
+                          {item.tags.map((tag) => (
+                            <div className="post-tag">{tag}</div>
+                          ))}
+                        </div>
+                      )}
                       {item.date && (
                         <div className="post-date">{formattedDate}</div>
                       )}
@@ -156,7 +163,7 @@ const PostsList = () => {
   );
 
   const postForm = isAdd && (
-    <MyTextInput onCancel={onCancel} onSave={createPost} />
+    <PostForm onCancel={onCancel} onSave={createPost} />
   );
 
   return (
