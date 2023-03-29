@@ -72,7 +72,12 @@ const PostForm = ({ onCancel, onSave }) => {
           body: Yup.string()
             .max(2000, 'Must be 2000 characters or less')
             .required('Required'),
-          imageUrl: Yup.string().required('Required'),
+          imageUrl: Yup.string()
+            .required('Required')
+            .matches(
+              /https?:\/\/.*\.(?:png|jpg)/i,
+              `It doesn't look like a picture link`
+            ),
           date: Yup.date()
             .min(today, 'Date must be equal to or later than today')
             .required('Required'),

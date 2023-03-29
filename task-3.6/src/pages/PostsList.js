@@ -122,7 +122,7 @@ const PostsList = () => {
                           alt="Post"
                         />
                       )}
-                      {item.tags && (
+                      {item.tags?.length > 0 && (
                         <div className="post-tags-container">
                           {item.tags.map((tag) => (
                             <div className="post-tag">{tag}</div>
