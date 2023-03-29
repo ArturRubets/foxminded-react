@@ -86,46 +86,57 @@ const PostsList = () => {
       <Droppable droppableId="posts">
         {(provided) => (
           <section {...provided.droppableProps} ref={provided.innerRef}>
-            {posts.map((item, index) => (
-              <Draggable
-                key={item.id}
-                draggableId={item.id.toString()}
-                index={index}>
-                {(provided) => (
-                  <article
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    ref={provided.innerRef}
-                    className="excerpt">
-                    <label>
-                      Post Title:
-                      <input
-                        type="text"
-                        value={item.title}
-                        onChange={(e) => onChangeTitle(e, item.id)}
-                      />
-                    </label>
-                    <label>
-                      Content:
-                      <textarea
-                        value={item.body}
-                        onChange={(e) => onChangeBody(e, item.id)}
-                      />
-                    </label>
-                    {item.imageUrl && (
-                      <Image
-                        className="post-img"
-                        src={item.imageUrl}
-                        alt="Post"
-                      />
-                    )}
-                    <button className="btn" onClick={() => onDelete(item.id)}>
-                      Delete
-                    </button>
-                  </article>
-                )}
-              </Draggable>
-            ))}
+            {posts.map((item, index) => {
+              const formattedDate =
+                item.date && new Date(item.date).toLocaleDateString();
+              return (
+                <Draggable
+                  key={item.id}
+                  draggableId={item.id.toString()}
+                  index={index}>
+                  {(provided) => (
+                    <article
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      ref={provided.innerRef}
+                      className="excerpt">
+                      <label>
+                        Post Title:
+                        <input
+                          type="text"
+                          value={item.title}
+                          onChange={(e) => onChangeTitle(e, item.id)}
+                        />
+                      </label>
+                      <label>
+                        Content:
+                        <textarea
+                          value={item.body}
+                          onChange={(e) => onChangeBody(e, item.id)}
+                        />
+                      </label>
+                      {item.imageUrl && (
+                        <Image
+                          className="post-img"
+                          src={item.imageUrl}
+                          alt="Post"
+                        />
+                      )}
+                      {item.date && (
+                        <div className="post-date">{formattedDate}</div>
+                      )}
+                      <div>
+                        <button
+                          className="btn"
+                          onClick={() => onDelete(item.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    </article>
+                  )}
+                </Draggable>
+              );
+            })}
             {provided.placeholder}
           </section>
         )}

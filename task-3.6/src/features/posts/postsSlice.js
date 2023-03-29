@@ -68,7 +68,7 @@ const postsSlice = createSlice({
       })
       .addCase(postPosts.fulfilled, (state, { payload }) => {
         // id always has the same value, this is a problem for displaying the list of posts
-        const { title, body, imageUrl } = payload;
+        const { title, body, imageUrl, date } = payload;
         const maxId = state.data.reduce((max, item) => {
           return item.id > max ? item.id : max;
         }, 0);
@@ -77,6 +77,7 @@ const postsSlice = createSlice({
           title,
           body,
           imageUrl,
+          date,
         });
         savePostsToLocalStorage(state.data);
       })

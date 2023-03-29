@@ -1,4 +1,6 @@
-import { Formik, Form, useField } from 'formik';
+import { Form, Formik, useField, useFormikContext } from 'formik';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import * as Yup from 'yup';
 
 const MyTextInput = ({ label, ...props }) => {
@@ -27,7 +29,31 @@ const MyTextArea = ({ label, ...props }) => {
   );
 };
 
+const MyDatePicker = ({ label, minDate, ...props }) => {
+  const { setFieldValue } = useFormikContext();
+  const [field, meta] = useField(props);
+  return (
+    <>
+      <label htmlFor={props.id || props.name}>{label}</label>
+      <DatePicker
+        {...field}
+        {...props}
+        selected={(field.value && new Date(field.value)) || null}
+        onChange={(val) => {
+          setFieldValue(field.name, val);
+        }}
+        minDate={minDate}
+      />
+      {meta.touched && meta.error ? (
+        <div className="error">{meta.error}</div>
+      ) : null}
+    </>
+  );
+};
+
 const PostForm = ({ onCancel, onSave }) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
   return (
     <>
       <h2>New Post</h2>
@@ -36,6 +62,7 @@ const PostForm = ({ onCancel, onSave }) => {
           title: '',
           body: '',
           imageUrl: '',
+          date: today,
         }}
         validationSchema={Yup.object({
           title: Yup.string()
@@ -45,6 +72,9 @@ const PostForm = ({ onCancel, onSave }) => {
             .max(2000, 'Must be 2000 characters or less')
             .required('Required'),
           imageUrl: Yup.string().required('Required'),
+          date: Yup.date()
+            .min(today, 'Date must be equal to or later than today')
+            .required('Required'),
         })}
         onSubmit={(values) => {
           onSave(values);
@@ -57,6 +87,13 @@ const PostForm = ({ onCancel, onSave }) => {
             name="imageUrl"
             id="imageUrl"
             type="text"
+          />
+          <MyDatePicker
+            label="Date Published"
+            name="date"
+            id="date"
+            type="date"
+            minDate={today}
           />
           <div className="btn-container">
             <button className="btn btn-hipster" onClick={onCancel}>
