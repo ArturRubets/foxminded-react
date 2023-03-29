@@ -81,6 +81,13 @@ const PostsList = () => {
     setPosts(items);
   };
 
+  const getItemStyle = (isDragging, draggableStyle) => ({
+    background: isDragging ? 'var(--primary-100)' : 'inherit',
+    cursor: isDragging ? 'all-scroll' : 'pointer',
+    // styles we need to apply on draggables
+    ...draggableStyle,
+  });
+
   const content = (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="posts">
@@ -94,10 +101,14 @@ const PostsList = () => {
                   key={item.id}
                   draggableId={item.id.toString()}
                   index={index}>
-                  {(provided) => (
+                  {(provided, snapshot) => (
                     <article
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
                       ref={provided.innerRef}
                       className="excerpt">
                       <label>
