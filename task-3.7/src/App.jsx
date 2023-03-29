@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from 'react-router-dom';
+import CreateUser from './components/CreateUser';
 import { fetchPosts } from './features/posts/postsSlice';
 import { fetchTodos } from './features/todos/todosSlice';
 import { fetchUsers } from './features/users/usersSlice';
@@ -20,19 +26,20 @@ function App() {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Home />} />
-          <Route path="posts-list" element={<PostsList />} />
-          <Route path="todo-list" element={<TodoList />} />
-          <Route path="user-list" element={<UserList />} />
-          <Route path="*" element={<Error />} />
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<SharedLayout />}>
+        <Route index element={<Home />} />
+        <Route path="posts-list" element={<PostsList />} />
+        <Route path="todo-list" element={<TodoList />} />
+        <Route path="user-list" element={<UserList />}>
+          <Route path="add-new" element={<CreateUser />} />
         </Route>
-      </Routes>
-    </BrowserRouter>
+        <Route path="*" element={<Error />} />
+      </Route>
+    )
   );
-}
 
+  return <RouterProvider router={router} />;
+}
 export default App;
