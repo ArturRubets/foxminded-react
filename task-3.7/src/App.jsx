@@ -4,7 +4,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  RouterProvider
+  RouterProvider,
 } from 'react-router-dom';
 import UserForm from './components/UserForm';
 import { fetchPosts } from './features/posts/postsSlice';
@@ -32,7 +32,8 @@ function App() {
         <Route index element={<Home />} />
         <Route path="posts-list" element={<PostsList />} />
         <Route path="todo-list" element={<TodoList />} />
-        <Route path="user-list" element={<UserList />}>
+        <Route path="user-list">
+          <Route index element={<UserList />} />
           <Route path="add-new" element={<UserForm />} />
         </Route>
         <Route path="*" element={<Error />} />
