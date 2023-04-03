@@ -147,6 +147,11 @@ a {
   background: var(--primary-700);
   box-shadow: var(--shadow-3);
 }
+.btn:disabled {
+  background: var(--primary-100) !important;
+  box-shadow: initial !important;
+  color: initial !important;
+}
 .btn-hipster {
   color: var(--primary-500);
   background: var(--primary-200);

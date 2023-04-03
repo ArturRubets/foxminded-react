@@ -1,8 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { Form, Formik, useField } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { postUsers } from '../features/users/usersSlice';
-import { Form, Formik, useField } from 'formik';
 
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -18,6 +18,8 @@ const MyTextInput = ({ label, ...props }) => {
 };
 
 const UserForm = () => {
+  const userStatus = useSelector((state) => state.users.status);
+  const isDisabled = userStatus === 'loading';
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -25,17 +27,21 @@ const UserForm = () => {
     navigate(-1);
   };
 
-  const onSubmit = (values) => {
-    dispatch(postUsers(values));
+  const onSubmit = async (values) => {
+    await dispatch(postUsers(values));
     navigate(-1);
   };
 
   const buttons = (
     <div className="btn-container">
-      <button type="button" className="btn btn-hipster" onClick={onCancel}>
+      <button
+        type="button"
+        className="btn btn-hipster"
+        onClick={onCancel}
+        disabled={isDisabled}>
         Cancel
       </button>
-      <button type="submit" className="btn">
+      <button type="submit" className="btn" disabled={isDisabled}>
         Create
       </button>
     </div>

@@ -66,7 +66,11 @@ const usersSlice = createSlice({
         state.data = payload;
         saveUsersToLocalStorage(state.data);
       })
+      .addCase(postUsers.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(postUsers.fulfilled, (state, { payload }) => {
+        state.status = 'succeeded';
         // id always has the same value, this is a problem for displaying the list of users
         const { name, userName } = payload;
         const maxId = state.data.reduce((max, item) => {
@@ -78,6 +82,9 @@ const usersSlice = createSlice({
           userName,
         });
         saveUsersToLocalStorage(state.data);
+      })
+      .addCase(postUsers.rejected, (state) => {
+        state.status = 'failed';
       })
       .addCase(deleteUsers.fulfilled, (state, { payload }) => {
         state.data = state.data.filter((item) => item.id !== payload);
