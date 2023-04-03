@@ -53,14 +53,14 @@ const UserForm = () => {
       <Formik
         initialValues={{
           name: '',
-          userName: '',
+          username: '',
           avatarUrl: '',
         }}
         validationSchema={Yup.object({
           name: Yup.string()
             .max(20, 'Must be 20 characters or less')
             .required('Required'),
-          userName: Yup.string()
+          username: Yup.string()
             .max(20, 'Must be 20 characters or less')
             .required('Required'),
           avatarUrl: Yup.string()
@@ -73,7 +73,7 @@ const UserForm = () => {
         onSubmit={onSubmit}>
         <Form className="excerpt">
           <MyTextInput label="Name" name="name" type="text" />
-          <MyTextInput label="User name" name="userName" type="text" />
+          <MyTextInput label="Username" name="username" type="text" />
           <MyTextInput label="Avatar URL" name="avatarUrl" type="text" />
           {buttons}
         </Form>

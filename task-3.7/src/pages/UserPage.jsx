@@ -50,7 +50,7 @@ const UserPage = () => {
           </div>
           <div className="column">
             <div className="value">{username}</div>
-            <div className="label">User name</div>
+            <div className="label">Username</div>
           </div>
         </div>
         {email && (
