@@ -54,6 +54,7 @@ const UserForm = () => {
         initialValues={{
           name: '',
           userName: '',
+          avatarUrl: '',
         }}
         validationSchema={Yup.object({
           name: Yup.string()
@@ -62,11 +63,18 @@ const UserForm = () => {
           userName: Yup.string()
             .max(20, 'Must be 20 characters or less')
             .required('Required'),
+          avatarUrl: Yup.string()
+            .required('Required')
+            .matches(
+              /https?:\/\/.*\.(?:png|jpg)/i,
+              `It doesn't look like a picture link`
+            ),
         })}
         onSubmit={onSubmit}>
         <Form className="excerpt">
           <MyTextInput label="Name" name="name" type="text" />
           <MyTextInput label="User name" name="userName" type="text" />
+          <MyTextInput label="Avatar URL" name="avatarUrl" type="text" />
           {buttons}
         </Form>
       </Formik>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Image from '../components/Image';
 import { deleteUsers, usersUpdated } from '../features/users/usersSlice';
 import { StrictModeDroppable as Droppable } from '../helpers/StrictModeDroppable';
 
@@ -65,6 +66,32 @@ const UsersList = () => {
     ...draggableStyle,
   });
 
+  const makeRandomColor = () => {
+    let randomColor;
+    do {
+      randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    } while (randomColor === 0xffffff);
+    return `#${randomColor}`;
+  };
+
+  const getAvatar = ({ avatarUrl, name }) => (
+    <Image
+      className="image-avatar photo-avatar"
+      src={avatarUrl}
+      alt="Avatar"
+      altElement={() => {
+        const firstLetter = name ? name.charAt(0) : '?';
+        return (
+          <div className="image-avatar avatar-placeholder">
+            <span style={{ backgroundColor: makeRandomColor() }}>
+              {firstLetter}
+            </span>
+          </div>
+        );
+      }}
+    />
+  );
+
   const content = (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="users">
@@ -85,6 +112,7 @@ const UsersList = () => {
                     )}
                     ref={provided.innerRef}
                     className="excerpt">
+                    {getAvatar(item)}
                     <label>
                       Name:
                       <input
