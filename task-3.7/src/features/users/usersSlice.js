@@ -68,14 +68,14 @@ const usersSlice = createSlice({
       })
       .addCase(postUsers.fulfilled, (state, { payload }) => {
         // id always has the same value, this is a problem for displaying the list of users
-        const { name, username } = payload;
+        const { name, userName } = payload;
         const maxId = state.data.reduce((max, item) => {
           return item.id > max ? item.id : max;
         }, 0);
         state.data.push({
           id: maxId + 1,
           name,
-          username,
+          userName,
         });
         saveUsersToLocalStorage(state.data);
       })

@@ -36,8 +36,8 @@ const UsersList = () => {
     onChange(e, id, 'name');
   };
 
-  const onChangeUsername = (e, id) => {
-    onChange(e, id, 'username');
+  const onChangeUserName = (e, id) => {
+    onChange(e, id, 'userName');
   };
 
   const onDelete = (id) => {
@@ -94,11 +94,11 @@ const UsersList = () => {
                       />
                     </label>
                     <label>
-                      Username:
+                      User name:
                       <input
                         type="text"
-                        value={item.username}
-                        onChange={(e) => onChangeUsername(e, item.id)}
+                        value={item.userName}
+                        onChange={(e) => onChangeUserName(e, item.id)}
                       />
                     </label>
                     <button className="btn" onClick={() => onDelete(item.id)}>
