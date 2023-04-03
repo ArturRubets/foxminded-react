@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { selectUserById } from '../features/users/usersSlice';
+import { getAvatar } from '../helpers/helpers';
 
 const UserPage = () => {
   const { id } = useParams();
@@ -27,6 +28,7 @@ const UserPage = () => {
     } = user;
     return (
       <section className="section">
+        {getAvatar(user)}
         <div className="row">
           <div className="column">
             <FontAwesomeIcon
