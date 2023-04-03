@@ -95,6 +95,9 @@ const usersSlice = createSlice({
 
 export const { usersUpdated, usersAdded } = usersSlice.actions;
 
+export const selectUserById = (state, userId) =>
+  state.users.data.find((user) => user.id === userId);
+
 export default usersSlice.reducer;
 
 const localStorageKey = 'users';

@@ -102,9 +102,9 @@ const UsersList = () => {
                       />
                     </label>
                     <div className="btn-container">
-                      <button className="btn" onClick={() => {}}>
-                        Read more
-                      </button>
+                      <Link to={`${item.id}`}>
+                        <button className="btn">Read more</button>
+                      </Link>
                       <button className="btn" onClick={() => onDelete(item.id)}>
                         Delete
                       </button>

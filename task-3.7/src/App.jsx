@@ -16,6 +16,7 @@ import PostsList from './pages/PostsList';
 import SharedLayout from './pages/SharedLayout';
 import TodoList from './pages/TodoList';
 import UserList from './pages/UserList';
+import UserPage from './pages/UserPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App() {
         <Route path="user-list">
           <Route index element={<UserList />} />
           <Route path="add-new" element={<UserForm />} />
+          <Route path=":id" element={<UserPage />} />
         </Route>
         <Route path="*" element={<Error />} />
       </Route>
