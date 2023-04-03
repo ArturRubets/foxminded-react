@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  deleteUsers,
-  postUsers,
-  usersUpdated,
-} from '../features/users/usersSlice';
+import { Link, Outlet } from 'react-router-dom';
+import { deleteUsers, usersUpdated } from '../features/users/usersSlice';
 import { StrictModeDroppable as Droppable } from '../helpers/StrictModeDroppable';
 
 const UsersList = () => {
-  const [isAdd, setIsAdd] = useState(false);
-  const defaultNewUser = { name: '', username: '' };
-  const [newUser, setNewUser] = useState(defaultNewUser);
   const usersData = useSelector((state) => state.users.data);
   const [users, setUsers] = useState(usersData);
   const [isDragEnd, setIsDragEnd] = useState(false);
@@ -46,29 +40,13 @@ const UsersList = () => {
     onChange(e, id, 'username');
   };
 
-  const onAdd = () => {
-    setIsAdd(true);
-  };
-
-  const onCancel = () => {
-    setIsAdd(false);
-  };
-
   const onDelete = (id) => {
     const user = users.find((user) => user.id === id);
     dispatch(deleteUsers(user));
   };
 
   const onSave = () => {
-    // We cancel the addition of the user
-    setIsAdd(false);
-    setNewUser({ ...defaultNewUser });
-
     dispatch(usersUpdated(users));
-
-    if (newUser.name || newUser.username) {
-      dispatch(postUsers(newUser));
-    }
   };
 
   const onDragEnd = (result) => {
@@ -126,46 +104,11 @@ const UsersList = () => {
     </DragDropContext>
   );
 
-  const newItemSection = isAdd && (
-    <div className="fill-new-user">
-      <hr />
-      <article className="excerpt">
-        <label>
-          Name:
-          <input
-            type="text"
-            value={newUser.name}
-            onChange={(e) => {
-              setNewUser({ ...newUser, name: e.target.value });
-            }}
-          />
-        </label>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={newUser.username}
-            onChange={(e) => {
-              setNewUser({ ...newUser, username: e.target.value });
-            }}
-          />
-        </label>
-      </article>
-    </div>
-  );
-
   const buttons = (
     <div className="btn-container">
-      {isAdd && (
-        <button className="btn btn-hipster" onClick={onCancel}>
-          Cancel
-        </button>
-      )}
-      {!isAdd && (
-        <button className="btn" onClick={onAdd}>
-          Add new
-        </button>
-      )}
+      <Link to={'add-new'}>
+        <button className="btn">Add new</button>
+      </Link>
       <button className="btn" onClick={onSave}>
         Save
       </button>
@@ -176,7 +119,7 @@ const UsersList = () => {
     <section className="section users-list">
       <h2>UsersList</h2>
       {content}
-      {newItemSection}
+      <Outlet />
       {buttons}
     </section>
   );
