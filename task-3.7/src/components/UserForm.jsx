@@ -48,7 +48,7 @@ const UserForm = () => {
   );
 
   return (
-    <>
+    <section className="section">
       <h2>New User</h2>
       <Formik
         initialValues={{
@@ -70,7 +70,7 @@ const UserForm = () => {
           {buttons}
         </Form>
       </Formik>
-    </>
+    </section>
   );
 };
 export default UserForm;

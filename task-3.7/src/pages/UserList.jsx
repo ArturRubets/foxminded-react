@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { deleteUsers, usersUpdated } from '../features/users/usersSlice';
 import { StrictModeDroppable as Droppable } from '../helpers/StrictModeDroppable';
 
@@ -101,9 +101,14 @@ const UsersList = () => {
                         onChange={(e) => onChangeUserName(e, item.id)}
                       />
                     </label>
-                    <button className="btn" onClick={() => onDelete(item.id)}>
-                      Delete
-                    </button>
+                    <div className="btn-container">
+                      <button className="btn" onClick={() => {}}>
+                        Read more
+                      </button>
+                      <button className="btn" onClick={() => onDelete(item.id)}>
+                        Delete
+                      </button>
+                    </div>
                   </article>
                 )}
               </Draggable>
@@ -127,10 +132,9 @@ const UsersList = () => {
   );
 
   return (
-    <section className="section users-list">
+    <section className="section">
       <h2>UsersList</h2>
       {content}
-      <Outlet />
       {buttons}
     </section>
   );
