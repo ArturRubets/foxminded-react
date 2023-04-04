@@ -448,13 +448,15 @@ hr {
   color: var(--red-middle);
 }
 
-.todo-list {
+.todo-list,
+.album-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.todo-item {
+.todo-item,
+.album-item {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -468,8 +470,13 @@ hr {
   margin-right: 10px;
 }
 
-.todo-title {
+.todo-title,
+.album-title {
   font-size: 1rem;
   font-weight: bold;
   width: 100%;
+}
+
+.tab-content {
+  padding: 1rem 0 0;
 }

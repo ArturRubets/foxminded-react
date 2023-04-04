@@ -6,6 +6,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
+import UserAlbums from './components/UserAlbums';
 import UserForm from './components/UserForm';
 import UserGeneral from './components/UserGeneral';
 import UserTodos from './components/UserTodos';
@@ -41,6 +42,7 @@ function App() {
           <Route path=":id" element={<UserPage />}>
             <Route index element={<UserGeneral />} />
             <Route path="todos" element={<UserTodos />} />
+            <Route path="albums" element={<UserAlbums />} />
           </Route>
         </Route>
         <Route path="*" element={<Error />} />
