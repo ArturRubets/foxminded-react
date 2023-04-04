@@ -53,6 +53,21 @@ export const deleteUsers = createAsyncThunk(
   }
 );
 
+// Expects a userId parameter of numeric type
+export const getUserTodos = createAsyncThunk(
+  'users/getUserTodos',
+  async (userId, thunkAPI) => {
+    try {
+      const resp = await axios(`${url}/${userId}/todos`);
+      return { todos: resp.data, userId };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        'something went wrong while receiving user todos'
+      );
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -95,14 +110,32 @@ const usersSlice = createSlice({
       .addCase(deleteUsers.fulfilled, (state, { payload }) => {
         state.data = state.data.filter((item) => item.id !== payload);
         saveUsersToLocalStorage(state.data);
+      })
+      .addCase(getUserTodos.fulfilled, (state, { payload }) => {
+        const { userId, todos } = payload;
+        const user = state.data.find((user) => user.id === userId);
+        if (user) {
+          const newTodos = todos.map(({ id, completed, title }) => ({
+            id,
+            completed,
+            title,
+          }));
+          user.todos = newTodos;
+          saveUsersToLocalStorage(state.data);
+        }
       });
   },
 });
 
 export const { usersUpdated, usersAdded } = usersSlice.actions;
 
+// Expects a userId parameter of numeric type
 export const selectUserById = (state, userId) =>
   state.users.data.find((user) => user.id === userId);
+
+// Expects a userId parameter of numeric type
+export const selectTodosByUserId = (state, userId) =>
+  selectUserById(state, userId)?.todos;
 
 export default usersSlice.reducer;
 

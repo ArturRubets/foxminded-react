@@ -447,3 +447,29 @@ hr {
   font-size: 22px;
   color: var(--red-middle);
 }
+
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.todo-item.completed {
+  opacity: 0.5;
+}
+
+.todo-checkbox {
+  margin-right: 10px;
+}
+
+.todo-title {
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+}
