@@ -19,7 +19,7 @@ const UserTodos = () => {
   }, [dispatch, todos, userId]);
 
   let content;
-  if (todos) {
+  if (todos?.length) {
     content = (
       <ul className="todo-list">
         {todos.map((todo) => (
