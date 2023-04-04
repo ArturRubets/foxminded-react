@@ -16,6 +16,7 @@ const UserGeneral = () => {
   const { id } = useParams();
   const userId = parseInt(id);
   const user = useSelector((state) => selectUserById(state, userId));
+
   let content;
   if (user) {
     const style = { color: 'var(--primary-500)' };
@@ -121,4 +122,5 @@ const UserGeneral = () => {
   }
   return <div className="tab-content">{content}</div>;
 };
+
 export default UserGeneral;

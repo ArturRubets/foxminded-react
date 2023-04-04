@@ -5,12 +5,14 @@ import {
   getUserPosts,
   selectPostsByUserId,
 } from '../features/users/usersSlice';
+import Spinner from './Spinner';
 
 const UserPosts = () => {
   const { id } = useParams();
   const userId = parseInt(id);
   const dispatch = useDispatch();
   const posts = useSelector((state) => selectPostsByUserId(state, userId));
+  const isLoading = useSelector((state) => state.users.status) === 'loading';
 
   useEffect(() => {
     if (!posts) {
@@ -19,7 +21,9 @@ const UserPosts = () => {
   }, [dispatch, posts, userId]);
 
   let content;
-  if (posts?.length) {
+  if (isLoading) {
+    content = <Spinner />;
+  } else if (posts?.length) {
     content = (
       <div>
         {posts.map((post) => (
@@ -35,4 +39,5 @@ const UserPosts = () => {
   }
   return <div className="tab-content">{content}</div>;
 };
+
 export default UserPosts;

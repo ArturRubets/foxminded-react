@@ -141,7 +141,11 @@ const usersSlice = createSlice({
         state.data = state.data.filter((item) => item.id !== payload);
         saveUsersToLocalStorage(state.data);
       })
+      .addCase(getUserTodos.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(getUserTodos.fulfilled, (state, { payload }) => {
+        state.status = 'succeeded';
         const { userId, todos } = payload;
         const user = state.data.find((user) => user.id === userId);
         if (user) {
@@ -154,7 +158,14 @@ const usersSlice = createSlice({
           saveUsersToLocalStorage(state.data);
         }
       })
+      .addCase(getUserTodos.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(getUserAlbums.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(getUserAlbums.fulfilled, (state, { payload }) => {
+        state.status = 'succeeded';
         const { userId, albums } = payload;
         const user = state.data.find((user) => user.id === userId);
         if (user) {
@@ -166,7 +177,14 @@ const usersSlice = createSlice({
           saveUsersToLocalStorage(state.data);
         }
       })
+      .addCase(getUserAlbums.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(getUserPosts.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(getUserPosts.fulfilled, (state, { payload }) => {
+        state.status = 'succeeded';
         const { userId, posts } = payload;
         const user = state.data.find((user) => user.id === userId);
         if (user) {
@@ -178,6 +196,9 @@ const usersSlice = createSlice({
           user.posts = newPosts;
           saveUsersToLocalStorage(state.data);
         }
+      })
+      .addCase(getUserPosts.rejected, (state) => {
+        state.status = 'failed';
       });
   },
 });

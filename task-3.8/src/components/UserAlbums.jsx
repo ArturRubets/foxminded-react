@@ -5,12 +5,14 @@ import {
   getUserAlbums,
   selectAlbumsByUserId,
 } from '../features/users/usersSlice';
+import Spinner from './Spinner';
 
 const UserAlbums = () => {
   const { id } = useParams();
   const userId = parseInt(id);
   const dispatch = useDispatch();
   const albums = useSelector((state) => selectAlbumsByUserId(state, userId));
+  const isLoading = useSelector((state) => state.users.status) === 'loading';
 
   useEffect(() => {
     if (!albums) {
@@ -19,7 +21,9 @@ const UserAlbums = () => {
   }, [dispatch, albums, userId]);
 
   let content;
-  if (albums?.length) {
+  if (isLoading) {
+    content = <Spinner />;
+  } else if (albums?.length) {
     content = (
       <ul className="album-list">
         {albums.map((album) => (
@@ -34,4 +38,5 @@ const UserAlbums = () => {
   }
   return <div className="tab-content">{content}</div>;
 };
+
 export default UserAlbums;

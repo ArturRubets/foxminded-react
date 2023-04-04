@@ -5,12 +5,14 @@ import {
   getUserTodos,
   selectTodosByUserId,
 } from '../features/users/usersSlice';
+import Spinner from './Spinner';
 
 const UserTodos = () => {
   const { id } = useParams();
   const userId = parseInt(id);
   const dispatch = useDispatch();
   const todos = useSelector((state) => selectTodosByUserId(state, userId));
+  const isLoading = useSelector((state) => state.users.status) === 'loading';
 
   useEffect(() => {
     if (!todos) {
@@ -19,7 +21,9 @@ const UserTodos = () => {
   }, [dispatch, todos, userId]);
 
   let content;
-  if (todos?.length) {
+  if (isLoading) {
+    content = <Spinner />;
+  } else if (todos?.length) {
     content = (
       <ul className="todo-list">
         {todos.map((todo) => (
@@ -42,4 +46,5 @@ const UserTodos = () => {
   }
   return <div className="tab-content">{content}</div>;
 };
+
 export default UserTodos;
