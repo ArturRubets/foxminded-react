@@ -68,6 +68,21 @@ export const getUserTodos = createAsyncThunk(
   }
 );
 
+// Expects a userId parameter of numeric type
+export const getUserAlbums = createAsyncThunk(
+  'users/getUserAlbums',
+  async (userId, thunkAPI) => {
+    try {
+      const resp = await axios(`${url}/${userId}/albums`);
+      return { albums: resp.data, userId };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        'something went wrong while receiving user albums'
+      );
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -123,6 +138,18 @@ const usersSlice = createSlice({
           user.todos = newTodos;
           saveUsersToLocalStorage(state.data);
         }
+      })
+      .addCase(getUserAlbums.fulfilled, (state, { payload }) => {
+        const { userId, albums } = payload;
+        const user = state.data.find((user) => user.id === userId);
+        if (user) {
+          const newAlbums = albums.map(({ id, title }) => ({
+            id,
+            title,
+          }));
+          user.albums = newAlbums;
+          saveUsersToLocalStorage(state.data);
+        }
       });
   },
 });
@@ -136,6 +163,10 @@ export const selectUserById = (state, userId) =>
 // Expects a userId parameter of numeric type
 export const selectTodosByUserId = (state, userId) =>
   selectUserById(state, userId)?.todos;
+
+// Expects a userId parameter of numeric type
+export const selectAlbumsByUserId = (state, userId) =>
+  selectUserById(state, userId)?.albums;
 
 export default usersSlice.reducer;
 

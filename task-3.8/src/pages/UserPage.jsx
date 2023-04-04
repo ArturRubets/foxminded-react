@@ -8,6 +8,9 @@ const UserPage = () => {
       <NavLink to={`/user-list/${id}`} className="link" end>
         General
       </NavLink>
+      <NavLink to={'albums'} className="link">
+        Albums
+      </NavLink>
       <NavLink to={'todos'} className="link">
         Todos
       </NavLink>
