@@ -58,18 +58,14 @@ export const getRandomColor = () => {
   return colors[randomIndex];
 };
 
-export const getAvatar = ({ avatarUrl, name, avatarColor }) => (
-  <Image
-    className="image-avatar photo-avatar"
-    src={avatarUrl}
-    alt="Avatar"
-    altElement={() => {
-      const firstLetter = name ? name.charAt(0) : '?';
-      return (
-        <div className="image-avatar avatar-placeholder">
-          <span style={{ backgroundColor: avatarColor }}>{firstLetter}</span>
-        </div>
-      );
-    }}
-  />
-);
+export const getAvatar = ({ avatarUrl, name, avatarColor }) => {
+  const firstLetter = name ? name.charAt(0).toUpperCase() : '?';
+  return (
+    <div
+      className="avatar"
+      data-initials={firstLetter}
+      style={{ backgroundColor: avatarColor }}>
+      <Image src={avatarUrl} alt="Avatar" />
+    </div>
+  );
+};
