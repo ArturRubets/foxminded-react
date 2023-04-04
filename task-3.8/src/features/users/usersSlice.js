@@ -83,6 +83,21 @@ export const getUserAlbums = createAsyncThunk(
   }
 );
 
+// Expects a userId parameter of numeric type
+export const getUserPosts = createAsyncThunk(
+  'users/getUserPosts',
+  async (userId, thunkAPI) => {
+    try {
+      const resp = await axios(`${url}/${userId}/posts`);
+      return { posts: resp.data, userId };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        'something went wrong while receiving user posts'
+      );
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -150,6 +165,19 @@ const usersSlice = createSlice({
           user.albums = newAlbums;
           saveUsersToLocalStorage(state.data);
         }
+      })
+      .addCase(getUserPosts.fulfilled, (state, { payload }) => {
+        const { userId, posts } = payload;
+        const user = state.data.find((user) => user.id === userId);
+        if (user) {
+          const newPosts = posts.map(({ id, title, body }) => ({
+            id,
+            title,
+            body,
+          }));
+          user.posts = newPosts;
+          saveUsersToLocalStorage(state.data);
+        }
       });
   },
 });
@@ -167,6 +195,10 @@ export const selectTodosByUserId = (state, userId) =>
 // Expects a userId parameter of numeric type
 export const selectAlbumsByUserId = (state, userId) =>
   selectUserById(state, userId)?.albums;
+
+// Expects a userId parameter of numeric type
+export const selectPostsByUserId = (state, userId) =>
+  selectUserById(state, userId)?.posts;
 
 export default usersSlice.reducer;
 

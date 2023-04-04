@@ -9,6 +9,7 @@ import {
 import UserAlbums from './components/UserAlbums';
 import UserForm from './components/UserForm';
 import UserGeneral from './components/UserGeneral';
+import UserPosts from './components/UserPosts';
 import UserTodos from './components/UserTodos';
 import { fetchPosts } from './features/posts/postsSlice';
 import { fetchTodos } from './features/todos/todosSlice';
@@ -43,6 +44,7 @@ function App() {
             <Route index element={<UserGeneral />} />
             <Route path="todos" element={<UserTodos />} />
             <Route path="albums" element={<UserAlbums />} />
+            <Route path="posts" element={<UserPosts />} />
           </Route>
         </Route>
         <Route path="*" element={<Error />} />

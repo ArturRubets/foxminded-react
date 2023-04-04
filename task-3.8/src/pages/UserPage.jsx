@@ -14,6 +14,9 @@ const UserPage = () => {
       <NavLink to={'todos'} className="link">
         Todos
       </NavLink>
+      <NavLink to={'posts'} className="link">
+        Posts
+      </NavLink>
     </nav>
   );
 
