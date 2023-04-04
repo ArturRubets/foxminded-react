@@ -1,55 +1,7 @@
-import { Form, Formik, useField, useFormikContext } from 'formik';
-import DatePicker from 'react-datepicker';
+import { Form, Formik } from 'formik';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as Yup from 'yup';
-
-const MyTextInput = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <input {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </>
-  );
-};
-
-const MyTextArea = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <textarea {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </>
-  );
-};
-
-const MyDatePicker = ({ label, minDate, ...props }) => {
-  const { setFieldValue } = useFormikContext();
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <DatePicker
-        {...field}
-        {...props}
-        selected={(field.value && new Date(field.value)) || null}
-        onChange={(val) => {
-          setFieldValue(field.name, val);
-        }}
-        minDate={minDate}
-      />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </>
-  );
-};
+import { MyDatePicker, MyTextArea, MyTextInput } from './FormComponents';
 
 const PostForm = ({ onCancel, onSave }) => {
   const today = new Date();

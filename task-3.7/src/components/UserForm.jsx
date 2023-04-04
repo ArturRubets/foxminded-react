@@ -1,21 +1,9 @@
-import { Form, Formik, useField } from 'formik';
+import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { postUsers } from '../features/users/usersSlice';
-
-const MyTextInput = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <input {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </>
-  );
-};
+import { MyTextInput } from './FormComponents';
 
 const UserForm = () => {
   const userStatus = useSelector((state) => state.users.status);
