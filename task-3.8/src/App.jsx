@@ -7,6 +7,8 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import UserForm from './components/UserForm';
+import UserGeneral from './components/UserGeneral';
+import UserTodos from './components/UserTodos';
 import { fetchPosts } from './features/posts/postsSlice';
 import { fetchTodos } from './features/todos/todosSlice';
 import { fetchUsers } from './features/users/usersSlice';
@@ -36,7 +38,10 @@ function App() {
         <Route path="user-list">
           <Route index element={<UserList />} />
           <Route path="add-new" element={<UserForm />} />
-          <Route path=":id" element={<UserPage />} />
+          <Route path=":id" element={<UserPage />}>
+            <Route index element={<UserGeneral />} />
+            <Route path="todos" element={<UserTodos />} />
+          </Route>
         </Route>
         <Route path="*" element={<Error />} />
       </Route>
