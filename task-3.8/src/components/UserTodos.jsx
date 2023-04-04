@@ -40,6 +40,6 @@ const UserTodos = () => {
   } else {
     content = <p className="error-not-found">Not found</p>;
   }
-  return <section className="section">{content}</section>;
+  return <div className="tab-content">{content}</div>;
 };
 export default UserTodos;
