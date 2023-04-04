@@ -72,13 +72,17 @@ const postsSlice = createSlice({
         const maxId = state.data.reduce((max, item) => {
           return item.id > max ? item.id : max;
         }, 0);
+        const tagObjects = tags.map((tag, index) => ({
+          id: index,
+          name: tag,
+        }));
         state.data.push({
           id: maxId + 1,
           title,
           body,
           imageUrl,
           date,
-          tags,
+          ...(tagObjects?.length > 0 && { tagObjects }),
         });
         savePostsToLocalStorage(state.data);
       })

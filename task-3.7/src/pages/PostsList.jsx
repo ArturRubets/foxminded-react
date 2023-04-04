@@ -133,10 +133,12 @@ const PostsList = () => {
                           alt="Post"
                         />
                       )}
-                      {item.tags?.length > 0 && (
+                      {item.tagObjects?.length > 0 && (
                         <div className="post-tags-container">
-                          {item.tags.map((tag) => (
-                            <div className="post-tag">{tag}</div>
+                          {item.tagObjects.map(({ id, name }) => (
+                            <div key={id} className="post-tag">
+                              {name}
+                            </div>
                           ))}
                         </div>
                       )}
