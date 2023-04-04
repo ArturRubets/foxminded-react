@@ -63,12 +63,10 @@ const UserForm = () => {
           username: Yup.string()
             .max(20, 'Must be 20 characters or less')
             .required('Required'),
-          avatarUrl: Yup.string()
-            .required('Required')
-            .matches(
-              /https?:\/\/.*\.(?:png|jpg)/i,
-              `It doesn't look like a picture link`
-            ),
+          avatarUrl: Yup.string().matches(
+            /https?:\/\/.*\.(?:png|jpg)/i,
+            `It doesn't look like a picture link`
+          ),
         })}
         onSubmit={onSubmit}>
         <Form className="excerpt">
