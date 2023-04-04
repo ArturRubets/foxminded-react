@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { selectUserById } from '../features/users/usersSlice';
 import { getAvatar } from '../helpers/helpers';
 
@@ -16,6 +16,7 @@ const UserPage = () => {
   const { id } = useParams();
   const userId = parseInt(id);
   const user = useSelector((state) => selectUserById(state, userId));
+  let content;
   if (user) {
     const style = { color: 'var(--primary-500)' };
     const {
@@ -26,8 +27,8 @@ const UserPage = () => {
       address: { street, city, zipcode } = {},
       company: { catchPhrase } = {},
     } = user;
-    return (
-      <section className="section">
+    content = (
+      <>
         {getAvatar(user)}
         <div className="row">
           <div className="column">
@@ -113,14 +114,27 @@ const UserPage = () => {
             </div>
           </div>
         )}
-      </section>
+      </>
     );
   } else {
-    return (
-      <section className="section">
-        <p className="error-not-found">Not found</p>
-      </section>
-    );
+    content = <p className="error-not-found">Not found</p>;
   }
+
+  const buttons = (
+    <div className="btn-container">
+      <Link to={'/user-list'}>
+        <button type="button" className="btn">
+          Cancel
+        </button>
+      </Link>
+    </div>
+  );
+
+  return (
+    <section className="section">
+      {content}
+      {buttons}
+    </section>
+  );
 };
 export default UserPage;

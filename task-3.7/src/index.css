@@ -38,6 +38,7 @@ html {
   --white: #fff;
   --red-light: #f8d7da;
   --red-dark: #842029;
+  --red-middle: #e53e3e;
   --green-light: #d1e7dd;
   --green-dark: #0f5132;
 
@@ -357,7 +358,7 @@ hr {
 
 .error {
   font-size: 12px;
-  color: #e53e3e;
+  color: var(--red-middle);
   margin-top: 0.25rem;
 }
 
@@ -443,5 +444,5 @@ hr {
 
 .error-not-found {
   font-size: 22px;
-  color: var(--red-dark);
+  color: var(--red-middle);
 }
