@@ -124,7 +124,7 @@ const UserPage = () => {
     <div className="btn-container">
       <Link to={'/user-list'}>
         <button type="button" className="btn">
-          Cancel
+          Back
         </button>
       </Link>
     </div>
