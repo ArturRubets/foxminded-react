@@ -53,12 +53,12 @@ const colors = [
   '#6666FF',
 ];
 
-const getRandomColor = () => {
+export const getRandomColor = () => {
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex];
 };
 
-export const getAvatar = ({ avatarUrl, name }) => (
+export const getAvatar = ({ avatarUrl, name, avatarColor }) => (
   <Image
     className="image-avatar photo-avatar"
     src={avatarUrl}
@@ -67,9 +67,7 @@ export const getAvatar = ({ avatarUrl, name }) => (
       const firstLetter = name ? name.charAt(0) : '?';
       return (
         <div className="image-avatar avatar-placeholder">
-          <span style={{ backgroundColor: getRandomColor() }}>
-            {firstLetter}
-          </span>
+          <span style={{ backgroundColor: avatarColor }}>{firstLetter}</span>
         </div>
       );
     }}

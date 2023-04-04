@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { getRandomColor } from '../../helpers/helpers';
 
 const url = 'https://jsonplaceholder.typicode.com/users';
 
@@ -12,7 +13,8 @@ export const getUsers = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const resp = await axios(url);
-      return resp.data;
+      // After receiving users, generate the color of the avatar
+      return resp.data.map(generateAvatarColor);
     } catch (error) {
       return thunkAPI.rejectWithValue(
         'something went wrong while receiving the users'
@@ -26,7 +28,8 @@ export const postUsers = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const resp = await axios.post(url, user);
-      return resp.data;
+      // If we do not need to send data to the server, then we generate the color already after the post request
+      return generateAvatarColor(resp.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(
         'something went wrong while posting the users'
@@ -142,3 +145,8 @@ export const fetchUsers = () => async (dispatch, getState) => {
     }
   }
 };
+
+const generateAvatarColor = (user) => ({
+  ...user,
+  avatarColor: getRandomColor(),
+});
