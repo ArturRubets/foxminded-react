@@ -7,7 +7,7 @@ const Home = () => {
   const usersData = useSelector((state) => state.users.data);
 
   return (
-    <section>
+    <section className="section">
       <article>
         <h2>PostList</h2>
         <ul>
