@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import Accordion from '../components/Accordion';
 import Image from '../components/Image';
 
 const Home = () => {
@@ -8,8 +9,7 @@ const Home = () => {
 
   return (
     <section className="section">
-      <article>
-        <h2>PostList</h2>
+      <Accordion title="PostList">
         <ul>
           {postsData.map((post) => {
             const formattedDate =
@@ -35,9 +35,8 @@ const Home = () => {
             );
           })}
         </ul>
-      </article>
-      <article>
-        <h2>TodosList</h2>
+      </Accordion>
+      <Accordion title="TodosList">
         <ul>
           {todosData.map((post) => {
             const status = post.completed ? 'Completed' : 'Not yet';
@@ -51,9 +50,8 @@ const Home = () => {
             );
           })}
         </ul>
-      </article>
-      <article>
-        <h2>UsersList</h2>
+      </Accordion>
+      <Accordion title="UsersList">
         <ul>
           {usersData.map((post) => (
             <div key={post.id} className="home excerpt">
@@ -64,7 +62,7 @@ const Home = () => {
             </div>
           ))}
         </ul>
-      </article>
+      </Accordion>
     </section>
   );
 };
